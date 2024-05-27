@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+  - traefik-ingressroute.yaml
+secretGenerator:
+  - name: radicale
+    literals:
+      - users=test:$apr1$zuyeuw7A$q2fgGqi3SJKinXi69.svp1
+configurations:
+  - kustomizeconfig.yaml

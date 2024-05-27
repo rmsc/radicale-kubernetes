@@ -1,0 +1,46 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: radicale
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: PathPrefix(`/calendar`)
+      kind: Rule
+      services:
+        - name: radicale
+          port: dav
+      middlewares:
+        - name: radicale-auth
+        - name: radicale-headers
+        - name: radicale-stripprefix
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: radicale-auth
+spec:
+  basicAuth:
+    secret: radicale
+    headerField: X-Remote-User
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: radicale-headers
+spec:
+  headers:
+    customRequestHeaders:
+      X-Script-Name: /calendar
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: radicale-stripprefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /calendar
