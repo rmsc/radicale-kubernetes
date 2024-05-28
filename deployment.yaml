@@ -17,7 +17,7 @@ data:
     type = internal
 
     [logging]
-    level = debug
+    level = info
 ---
 apiVersion: v1
 kind: Service
