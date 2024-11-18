@@ -62,7 +62,7 @@ spec:
     spec:
       containers:
         - name: radicale
-          image: tomsquest/docker-radicale
+          image: tomsquest/docker-radicale:latest
           ports:
             - name: dav
               containerPort: 5232
